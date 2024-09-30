@@ -30,6 +30,7 @@ services:
       -c hot_standby_feedback=on
     volumes:
       - ./scripts/:/docker-entrypoint-initdb.d/
+      - postgres_data_primary:/var/lib/postgresql/data
 
   postgres_replica:
     <<: *postgres-common
@@ -52,4 +53,6 @@ services:
     depends_on:
       - postgres_primary
 
-# psql postgres://postgres:password@localhost:5432/postgres
+volumes:
+  postgres_data_primary:
+    driver: local
