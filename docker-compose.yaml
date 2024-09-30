@@ -57,7 +57,7 @@ services:
   pgpool:
     image: bitnami/pgpool:4
     ports:
-      - 5431:5432
+      - 5432:5432
     environment:
       - PGPOOL_BACKEND_NODES=0:postgres_primary:5432,1:postgres_replica:5432
       - PGPOOL_SR_CHECK_USER=replicator
