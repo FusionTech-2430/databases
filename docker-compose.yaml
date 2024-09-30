@@ -13,8 +13,6 @@ x-postgres-common:
 services:
   postgres_primary:
     <<: *postgres-common
-    ports:
-      - 5433:5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres
@@ -34,8 +32,6 @@ services:
 
   postgres_replica:
     <<: *postgres-common
-    ports:
-      - 5434:5432
     environment:
       PGUSER: replicator
       PGPASSWORD: replicator_password
@@ -56,7 +52,7 @@ services:
   pgpool:
     image: bitnami/pgpool:4
     ports:
-      - 5435:5432
+      - 5432:5432
     environment:
       - PGPOOL_BACKEND_NODES=0:postgres_primary:5432,1:postgres_replica:5432
       - PGPOOL_SR_CHECK_USER=postgres
@@ -66,6 +62,7 @@ services:
       - PGPOOL_POSTGRES_PASSWORD=rtnfhdNoT08M
       - PGPOOL_ADMIN_USERNAME=admin
       - PGPOOL_ADMIN_PASSWORD=adminpassword
+      - PGPOOL_ENABLE_LOAD_BALANCING=yes
     healthcheck:
       test: ["CMD", "/opt/bitnami/scripts/pgpool/healthcheck.sh"]
       interval: 10s
