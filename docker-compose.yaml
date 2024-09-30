@@ -37,6 +37,7 @@ services:
       PGPASSWORD: replicator_password
     command: |
       bash -c "
+      rm -rf /var/lib/postgresql/data/* &&
       until pg_basebackup --pgdata=/var/lib/postgresql/data -R --slot=replication_slot --host=postgres_primary --port=5432
       do
       echo 'Waiting for primary to connect...'
@@ -63,6 +64,7 @@ services:
       - PGPOOL_ADMIN_USERNAME=admin
       - PGPOOL_ADMIN_PASSWORD=adminpassword
       - PGPOOL_ENABLE_LOAD_BALANCING=yes
+      - PGPOOL_ENABLE_LOG_PER_NODE_STATEMENT=yes
     healthcheck:
       test: ["CMD", "/opt/bitnami/scripts/pgpool/healthcheck.sh"]
       interval: 10s
