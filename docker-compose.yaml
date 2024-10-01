@@ -14,7 +14,7 @@ services:
   postgres_primary:
     <<: *postgres-common
     ports:
-      - 5433:5432
+      - 5432:5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres
@@ -33,31 +33,6 @@ services:
     volumes:
       - ./scripts/:/docker-entrypoint-initdb.d/
       - postgres_data_primary:/var/lib/postgresql/data
-
-  postgres_replica:
-    <<: *postgres-common
-    ports:
-      - 5434:5432
-    environment:
-      PGUSER: replicator
-      PGPASSWORD: replicator_password
-    networks:
-      - all_connected
-    command: |
-      bash -c "
-      rm -rf /var/lib/postgresql/data/* &&
-      until pg_basebackup --pgdata=/var/lib/postgresql/data -R --slot=replication_slot --host=postgres_primary --port=5432
-      do
-      echo 'Waiting for primary to connect...'
-      sleep 1s
-      done
-      echo 'Backup done, starting replica...'
-      chmod 0700 /var/lib/postgresql/data
-      postgres
-      "
-    depends_on:
-      - postgres_primary
-
 volumes:
   postgres_data_primary:
     driver: local
