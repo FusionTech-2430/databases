@@ -54,27 +54,6 @@ services:
     depends_on:
       - postgres_primary
 
-  pgpool:
-    image: bitnami/pgpool:4
-    ports:
-      - 5432:5432
-    environment:
-      - PGPOOL_BACKEND_NODES=0:postgres_primary:5432,1:postgres_replica:5432
-      - PGPOOL_SR_CHECK_USER=replicator
-      - PGPOOL_SR_CHECK_PASSWORD=replicator_password
-      - PGPOOL_ENABLE_LDAP=no
-      - PGPOOL_POSTGRES_USERNAME=developer
-      - PGPOOL_POSTGRES_PASSWORD=rtnfhdNoT08M
-      - PGPOOL_ADMIN_USERNAME=admin
-      - PGPOOL_ADMIN_PASSWORD=adminpassword
-      - PGPOOL_ENABLE_LOAD_BALANCING=yes
-      - PGPOOL_ENABLE_LOG_PER_NODE_STATEMENT=yes
-    healthcheck:
-      test: ["CMD", "/opt/bitnami/scripts/pgpool/healthcheck.sh"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
 volumes:
   postgres_data_primary:
     driver: local
