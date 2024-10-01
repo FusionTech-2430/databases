@@ -66,7 +66,7 @@ create table all_connected_businesses.conveyance_request
 
 create table all_connected_businesses.invitation_token
 (
-    invitation_token varchar(28) not null
+    invitation_token uuid not null
         primary key,
     id_business      uuid        not null
         references all_connected_businesses.business,
