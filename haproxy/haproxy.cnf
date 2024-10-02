@@ -1,0 +1,21 @@
+global
+    log stdout format raw local0
+    daemon
+
+defaults
+    log     global
+    mode    tcp
+    option  tcplog
+    timeout connect 5000ms
+    timeout client  50000ms
+    timeout server  50000ms
+
+frontend postgres
+    bind *:5432
+    default_backend postgres_pool
+
+backend postgres_pool
+    balance roundrobin
+    option tcp-check
+    server primary 10.43.101.156:5433 check
+    server replica 10.43.101.44:5434 check
