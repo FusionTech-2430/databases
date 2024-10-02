@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  haproxy:
+    image: haproxy:latest
+    container_name: haproxy_postgres
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    ports:
+      - "5432:5432"
+    networks:
+      - all_connected
+
+networks:
+  all_connected:
+    external: true
