@@ -1,0 +1,18 @@
+services:
+  pgpool:
+    image: bitnami/pgpool:latest
+    container_name: pgpool
+    ports:
+      - "5432:5432"
+    environment:
+      - PGPOOL_BACKEND_NODES=0:10.43.101.156:5433,1:10.43.101.44:5434
+      - PGPOOL_SR_CHECK_USER=replicator
+      - PGPOOL_SR_CHECK_PASSWORD=replicator_password
+      - PGPOOL_ENABLE_LOAD_BALANCING=true
+      - PGPOOL_ENABLE_CONNECTION_POOLING=true
+    networks:
+      - all_connected
+
+networks:
+  all_connected:
+    external: true
