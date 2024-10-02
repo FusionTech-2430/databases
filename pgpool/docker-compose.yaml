@@ -8,8 +8,14 @@ services:
       - PGPOOL_BACKEND_NODES=0:10.43.101.156:5433,1:10.43.101.44:5434
       - PGPOOL_SR_CHECK_USER=replicator
       - PGPOOL_SR_CHECK_PASSWORD=replicator_password
-      - PGPOOL_ENABLE_LOAD_BALANCING=true
+      - PGPOOL_ENABLE_LOAD_BALANCING=yes
       - PGPOOL_ENABLE_CONNECTION_POOLING=true
+      # Credenciales del administrador de Pgpool
+      - PGPOOL_ADMIN_USERNAME=admin
+      - PGPOOL_ADMIN_PASSWORD=admin_password
+      # Credenciales del administrador de la base de datos PostgreSQL
+      - PGPOOL_POSTGRES_USERNAME=postgres
+      - PGPOOL_POSTGRES_PASSWORD=postgres_password
     networks:
       - all_connected
 
