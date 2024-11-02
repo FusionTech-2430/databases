@@ -3,6 +3,8 @@ services:
   question_db:
     container_name: question_db
     image: mcr.microsoft.com/mssql/server:2022-latest
+    networks:
+      - all_connected
     environment:
       ACCEPT_EULA: Y
       MSSQL_PID: Developer
@@ -25,6 +27,8 @@ services:
   question_db.configurator:
     container_name: configurator
     image: mcr.microsoft.com/mssql/server:2022-latest
+    networks:
+      - all_connected
     volumes:
       - ./scripts:/docker-entrypoint-initdb.d
     depends_on:
@@ -38,3 +42,6 @@ services:
       '
 volumes:
   mssql_data:
+networks:
+  all_connected:
+    external: true
