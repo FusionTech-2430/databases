@@ -84,6 +84,9 @@ create table all_connected_products.reported_product
     report_date timestamp    not null
 );
 
+alter table all_connected_products."order"
+    add id_business uuid;
+
 GRANT USAGE ON SCHEMA all_connected_products TO developer;
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA all_connected_products TO developer;
 ALTER DEFAULT PRIVILEGES IN SCHEMA all_connected_products GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO developer;
